@@ -8,4 +8,8 @@ Route::get('/', [AuthController::class, 'Login']);
 
 Route::post('/', [AuthController::class, 'LoginStore']);
 
-Route::get('panel/dashboard', [DashboardController::class, 'panelDashboard']);
+Route::get('/logout', [AuthController::class, 'Logout']);
+
+Route::group(['middleware' => 'userAdmin'], function () {
+    Route::get('panel/dashboard', [DashboardController::class, 'panelDashboard']);
+});

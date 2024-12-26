@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function Login() {
+        if (!empty(Auth::check())) {
+            return redirect('panel/dashboard');
+        }
         return view('auth.login');
     }
     
@@ -19,5 +22,10 @@ class AuthController extends Controller
         } else {
             return redirect()->back()->with('error', 'Please Enter your Correct Email and Password');
         }
+    }
+
+    public function Logout() {
+        Auth::logout();
+        return redirect(url(''));
     }
 }
