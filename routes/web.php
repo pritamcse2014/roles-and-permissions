@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'Login']);
@@ -13,6 +14,8 @@ Route::get('/logout', [AuthController::class, 'Logout']);
 
 Route::group(['middleware' => 'userAdmin'], function () {
     Route::get('panel/dashboard', [DashboardController::class, 'panelDashboard']);
+
+    Route::get('panel/user', [UserController::class, 'panelUserList']);
 
     Route::get('panel/role', [RoleController::class, 'panelRoleList']);
 
