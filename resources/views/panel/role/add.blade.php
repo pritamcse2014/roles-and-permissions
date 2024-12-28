@@ -34,7 +34,7 @@
                                         @foreach ($value['group'] as $group)
                                         <div class="col-md-3">
                                             <label for="">
-                                                <input type="checkbox" name="" id=""> {{ $group['name'] }}
+                                                <input type="checkbox" name="permission_id[]" value="{{ $group['id'] }}" id=""> {{ $group['name'] }}
                                             </label>
                                         </div>
                                         @endforeach
