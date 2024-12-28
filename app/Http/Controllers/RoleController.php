@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,10 @@ class RoleController extends Controller
     }
     
     public function panelRoleAdd() {
-        return view('panel.role.add');
+        $getPermission = Permission::getPermissionGroupBy();
+        // dd($getPermission);
+        $data['getPermission'] = $getPermission;
+        return view('panel.role.add', $data);
     }
     
     public function panelRoleStore(Request $request) {
