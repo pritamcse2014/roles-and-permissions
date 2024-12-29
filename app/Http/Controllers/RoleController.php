@@ -6,10 +6,19 @@ use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
     public function panelRoleList() {
+        $permissionRole = PermissionRole::getPermission('Role', Auth::user()->role_id);
+        if (empty($permissionRole)) {
+            abort(404);
+        }
+
+        $data['permissionAdd'] = PermissionRole::getPermission('Add Role', Auth::user()->role_id);
+        $data['permissionEdit'] = PermissionRole::getPermission('Edit Role', Auth::user()->role_id);
+        $data['permissionDelete'] = PermissionRole::getPermission('Delete Role', Auth::user()->role_id);
         // System - 1
         $data['getRecord'] = Role::get();
         // System - 2
@@ -18,6 +27,11 @@ class RoleController extends Controller
     }
     
     public function panelRoleAdd() {
+        $permissionRole = PermissionRole::getPermission('Add role', Auth::user()->role_id);
+        if (empty($permissionRole)) {
+            abort(404);
+        }
+
         $getPermission = Permission::getPermissionGroupBy();
         // dd($getPermission);
         $data['getPermission'] = $getPermission;
@@ -25,6 +39,11 @@ class RoleController extends Controller
     }
     
     public function panelRoleStore(Request $request) {
+        $permissionRole = PermissionRole::getPermission('Add Role', Auth::user()->role_id);
+        if (empty($permissionRole)) {
+            abort(404);
+        }
+
         // dd($request->all());
         $save = $request->validate([
             'name' => 'required'
@@ -40,6 +59,11 @@ class RoleController extends Controller
     }
 
     public function panelRoleEdit($id) {
+        $permissionRole = PermissionRole::getPermission('Edit Role', Auth::user()->role_id);
+        if (empty($permissionRole)) {
+            abort(404);
+        }
+
         // echo $id;
         // die();
         // System - 1
@@ -52,6 +76,11 @@ class RoleController extends Controller
     }
 
     public function panelRoleUpdate(Request $request, $id) {
+        $permissionRole = PermissionRole::getPermission('Edit Role', Auth::user()->role_id);
+        if (empty($permissionRole)) {
+            abort(404);
+        }
+
         // dd($request->all());
         $save = $request->validate([
             'name' => 'required'
@@ -70,6 +99,11 @@ class RoleController extends Controller
     }
 
     public function panelRoleDelete($id) {
+        $permissionRole = PermissionRole::getPermission('Delete Role', Auth::user()->role_id);
+        if (empty($permissionRole)) {
+            abort(404);
+        }
+
         // echo $id;
         $save = Role::find($id);
         $save->delete();

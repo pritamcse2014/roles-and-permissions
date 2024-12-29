@@ -16,7 +16,8 @@
                             <h5 class="card-title">Role List</h5>
                         </div>
                         <div class="col-md-6">
-                            <a href="{{ url('panel/role/add') }}" class="btn btn-primary float-md-end mt-2">Add Role</a>
+                            @if (!empty($permissionAdd))
+                            <a href="{{ url('panel/role/add') }}" class="btn btn-primary float-md-end mt-2">Add Role</a> @endif
                         </div>
                     </div>
                     <!-- Table with stripped rows -->
@@ -27,7 +28,9 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Created At</th>
                                 <th scope="col">Updated At</th>
+                                @if (!empty($permissionEdit) || !empty($permissionDelete))
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -38,8 +41,9 @@
                                 <td>{{ date('d-m-Y', strtotime($value->created_at)) }}</td>
                                 <td>{{ date('d-m-Y', strtotime($value->updated_at)) }}</td>
                                 <td>
-                                    <a href="{{ url('panel/role/edit/' .$value->id) }}" class="btn btn-success btn-sm">Edit</a>
-                                    <a href="{{ url('panel/role/delete/' .$value->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</a>
+                                    @if (!empty($permissionEdit))
+                                    <a href="{{ url('panel/role/edit/' .$value->id) }}" class="btn btn-success btn-sm">Edit</a> @endif @if (!empty($permissionDelete))
+                                    <a href="{{ url('panel/role/delete/' .$value->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</a> @endif
                                 </td>
                             </tr>
                             @endforeach
